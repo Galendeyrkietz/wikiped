@@ -1,0 +1,143 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Modern Wikipedia</title>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+      <style>
+          :root {
+              --primary: #1a1a2e;
+              --secondary: #4a4e69;
+              --accent: #4361ee;
+              --background: #f0f2f5;
+              --border: #e0e0e0;
+              --gradient-1: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+              --gradient-2: linear-gradient(to right, #3b82f6 0%, #10b981 50%, #06b6d4 100%);
+              --gradient-3: linear-gradient(45deg, #f97316 0%, #db2777 50%, #7c3aed 100%);
+              --gradient-4: linear-gradient(to right bottom, #0ea5e9 0%, #8b5cf6 50%, #d946ef 100%);
+          }
+
+          * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+              font-family: 'Inter', sans-serif;
+              scroll-behavior: smooth;
+          }
+
+          body {
+              background: linear-gradient(135deg, var(--background) 0%, #ffffff 100%);
+              color: var(--primary);
+              line-height: 1.6;
+              padding: 0 1rem;
+              min-height: 100vh;
+              position: relative;
+              overflow-x: hidden;
+          }
+
+          .wiki-container {
+              max-width: 1000px;
+              margin: 0 auto;
+              position: relative;
+          }
+
+          .featured-articles {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+              gap: 2rem;
+              margin-top: 3rem;
+          }
+
+          .article-card {
+              background: rgba(255, 255, 255, 0.95);
+              padding: 2rem;
+              border-radius: 16px;
+              box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+              transition: all 0.3s ease;
+              backdrop-filter: blur(10px);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              text-decoration: none;
+              color: var(--primary);
+          }
+
+          .article-card:hover {
+              transform: translateY(-10px);
+              box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+          }
+
+          .article-card h2 {
+              font-size: 1.5rem;
+              margin-bottom: 1rem;
+              background: var(--gradient-1);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+          }
+
+          .article-card p {
+              font-size: 0.9rem;
+              color: var(--secondary);
+              margin-bottom: 1rem;
+          }
+
+          .welcome-section {
+              text-align: center;
+              padding: 4rem 0;
+          }
+
+          .welcome-title {
+              font-size: 3rem;
+              margin-bottom: 1.5rem;
+              background: var(--gradient-3);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          .welcome-subtitle {
+              font-size: 1.2rem;
+              color: var(--secondary);
+              margin-bottom: 3rem;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="wiki-container">
+          <header>
+              <div class="wiki-header">
+                  <div class="wiki-logo">Wikiped</div>
+                  <input type="search" class="wiki-search" placeholder="Search Wikipedia">
+              </div>
+              <nav class="wiki-nav">
+  
+              </nav>
+          </header>
+
+          <main>
+              <section class="welcome-section">
+                  <h1 class="welcome-title">Wikiped</h1>
+                  <p class="welcome-subtitle">Modern Wikipedia page</p>
+              </section>
+
+              <div class="featured-articles">
+                  <a href="Artificial%20Inteligence.html" class="article-card">
+                      <h2>Artificial Intelligence</h2>
+                      <p>Discover the fascinating world of AI and its impact on modern technology. Learn about machine learning, neural networks, and the future of intelligent systems.</p>
+                  </a>
+
+                  <a href="Lithuania.html" class="article-card">
+                      <h2>Lithuania</h2>
+                      <p>Explore the rich history and culture of Lithuania, a Baltic nation with a fascinating past and vibrant present. Learn about its traditions, geography, and modern achievements.</p>
+                  </a>
+
+                  <a href="Scotland.html" class="article-card">
+                      <h2>Scotland</h2>
+                      <p>Discover the rich heritage of Scotland, from its stunning landscapes and historic castles to its unique culture and traditions. Learn about its history, geography, and modern society.</p>
+                  </a>
+              </div>
+          </main>
+      </div>
+  </body>
+  </html>

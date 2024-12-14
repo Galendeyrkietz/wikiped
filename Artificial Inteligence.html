@@ -1,0 +1,364 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Modern Wikipedia</title>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+      <style>
+          :root {
+              --primary: #1a1a2e;
+              --secondary: #4a4e69;
+              --accent: #4361ee;
+              --background: #f0f2f5;
+              --border: #e0e0e0;
+              --gradient-1: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+              --gradient-2: linear-gradient(to right, #3b82f6 0%, #10b981 50%, #06b6d4 100%);
+              --gradient-3: linear-gradient(45deg, #f97316 0%, #db2777 50%, #7c3aed 100%);
+              --gradient-4: linear-gradient(to right bottom, #0ea5e9 0%, #8b5cf6 50%, #d946ef 100%);
+          }
+
+          * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+              font-family: 'Inter', sans-serif;
+              scroll-behavior: smooth;
+          }
+
+          body {
+              background: linear-gradient(135deg, var(--background) 0%, #ffffff 100%);
+              color: var(--primary);
+              line-height: 1.6;
+              padding: 0 1rem;
+              min-height: 100vh;
+              position: relative;
+              overflow-x: hidden;
+          }
+
+          body::before {
+              content: '';
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+              pointer-events: none;
+              z-index: -1;
+          }
+
+          header {
+              padding: 1rem 0;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+              margin-bottom: 2rem;
+              backdrop-filter: blur(10px);
+              position: sticky;
+              top: 0;
+              background: rgba(255, 255, 255, 0.85);
+              box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+              z-index: 1000;
+          }
+
+          .wiki-container {
+              max-width: 1000px;
+              margin: 0 auto;
+              position: relative;
+          }
+
+          .wiki-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+          }
+
+          .wiki-logo {
+              font-size: 1.5rem;
+              font-weight: 700;
+              color: var(--primary);
+              background: var(--gradient-3);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              transition: all 0.3s ease;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          .wiki-logo:hover {
+              transform: scale(1.05);
+              filter: brightness(1.2);
+          }
+
+          .wiki-search {
+              padding: 0.5rem 1rem;
+              border: 2px solid transparent;
+              border-radius: 12px;
+              width: 300px;
+              background: rgba(255, 255, 255, 0.95);
+              box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+              transition: all 0.3s ease;
+              backdrop-filter: blur(5px);
+          }
+
+          .wiki-search:focus {
+              outline: none;
+              border-color: var(--accent);
+              box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+              transform: translateY(-2px);
+          }
+
+          .wiki-nav {
+              margin: 1rem 0;
+              padding-bottom: 1rem;
+              background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+          }
+
+          .wiki-nav a {
+              color: var(--accent);
+              text-decoration: none;
+              margin-right: 1.5rem;
+              font-size: 0.9rem;
+              position: relative;
+              transition: all 0.3s ease;
+          }
+
+          .wiki-nav a::after {
+              content: '';
+              position: absolute;
+              width: 0;
+              height: 2px;
+              bottom: -4px;
+              left: 0;
+              background: var(--gradient-4);
+              transition: width 0.3s ease;
+              border-radius: 2px;
+          }
+
+          .wiki-nav a:hover {
+              color: #7c3aed;
+              text-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+          }
+
+          .wiki-nav a:hover::after {
+              width: 100%;
+          }
+
+          .article-title {
+              font-size: 2.5rem;
+              margin-bottom: 1rem;
+              font-weight: 700;
+              background: var(--gradient-1);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          .article-metadata {
+              color: var(--secondary);
+              font-size: 0.9rem;
+              margin-bottom: 2rem;
+              opacity: 0.8;
+              text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+          }
+
+          .article-content {
+              display: grid;
+              grid-template-columns: 3fr 1fr;
+              gap: 2rem;
+          }
+
+          .main-content {
+              font-size: 1rem;
+              color: var(--primary);
+              background: rgba(255, 255, 255, 0.95);
+              padding: 2rem;
+              border-radius: 16px;
+              box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+              transition: all 0.3s ease;
+              backdrop-filter: blur(10px);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+          }
+
+          .main-content:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+          }
+
+          .main-content p {
+              margin-bottom: 1rem;
+              line-height: 1.8;
+          }
+
+          .main-content h2 {
+              font-size: 1.5rem;
+              margin: 2rem 0 1rem;
+              padding-bottom: 0.3rem;
+              border-bottom: 2px solid rgba(99, 102, 241, 0.2);
+              background: var(--gradient-2);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          .sidebar {
+              background: rgba(255, 255, 255, 0.95);
+              padding: 1.5rem;
+              border-radius: 16px;
+              box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+              backdrop-filter: blur(10px);
+              transition: all 0.3s ease;
+              border: 1px solid rgba(255, 255, 255, 0.2);
+          }
+
+          .sidebar:hover {
+              transform: translateY(-5px) rotate(1deg);
+              box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+          }
+
+          .sidebar h3 {
+              font-size: 1.2rem;
+              margin-bottom: 1rem;
+              background: var(--gradient-4);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          .sidebar-info {
+              font-size: 0.9rem;
+              margin-bottom: 1rem;
+              padding: 0.5rem;
+              border-radius: 8px;
+              transition: all 0.3s ease;
+              border: 1px solid transparent;
+          }
+
+          .sidebar-info:hover {
+              background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+              border-color: rgba(99, 102, 241, 0.2);
+              transform: scale(1.02);
+          }
+
+          .references {
+              margin-top: 2rem;
+              padding: 1.5rem;
+              border-radius: 12px;
+              background: rgba(255, 255, 255, 0.9);
+              border: 1px solid rgba(99, 102, 241, 0.1);
+          }
+
+          .reference-list {
+              list-style-position: inside;
+              margin-top: 0.5rem;
+          }
+
+          .reference-list li {
+              margin-bottom: 0.5rem;
+              padding: 0.5rem;
+              border-radius: 8px;
+              transition: all 0.3s ease;
+          }
+
+          .reference-list li:hover {
+              background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+              transform: translateX(5px);
+          }
+
+          @media (max-width: 768px) {
+              .article-content {
+                  grid-template-columns: 1fr;
+              }
+            
+              .wiki-search {
+                  width: 200px;
+              }
+          }
+
+          html {
+              scroll-behavior: smooth;
+          }
+
+          ::-webkit-scrollbar {
+              width: 12px;
+          }
+
+          ::-webkit-scrollbar-track {
+              background: linear-gradient(to bottom, var(--background), #ffffff);
+          }
+
+          ::-webkit-scrollbar-thumb {
+              background: var(--gradient-3);
+              border-radius: 6px;
+              border: 3px solid var(--background);
+          }
+
+          ::-webkit-scrollbar-thumb:hover {
+              background: var(--gradient-4);
+          }
+      </style>
+</head>
+  <body>
+      <div class="wiki-container">
+          <header>
+              <div class="wiki-header">
+                  <div class="wiki-logo">Wikipedia</div>
+                  <input type="search" class="wiki-search" placeholder="Search Wikipedia">
+              </div>
+              <nav class="wiki-nav">
+                  <a href="#">Article</a>
+                  <a href="#">Talk</a>
+                  <a href="#">Edit</a>
+                  <a href="#">History</a>
+                  <a href="#">Tools</a>
+              </nav>
+          </header>
+
+          <main>
+              <h1 class="article-title">Artificial Intelligence</h1>
+              <div class="article-metadata">
+                  From Wikipedia, the free encyclopedia
+              </div>
+
+              <div class="article-content">
+                  <div class="main-content">
+                      <p>Artificial intelligence (AI) is intelligence demonstrated by machines, as opposed to natural intelligence displayed by animals including humans. AI research has been defined as the field of study of intelligent agents, which refers to any system that perceives its environment and takes actions that maximize its chance of achieving its goals.</p>
+
+                      <h2>History</h2>
+                      <p>The field of AI research was founded at a workshop held on the campus of Dartmouth College during the summer of 1956. The attendees became the founders and leaders of AI research. They and their students produced programs that the press described as "astonishing": computers were learning checkers strategies, solving word problems in algebra, proving logical theorems and speaking English.</p>
+
+                      <h2>Applications</h2>
+                      <p>AI has been used in a wide range of fields including medical diagnosis, stock trading, robot control, law, remote sensing, scientific discovery and toy making. AI has become an essential part of the technology industry, providing the heavy lifting for many of the most challenging problems in computer science. AI is also being used in countries like <a href="Lithuania.html">Lithuania</a> for various applications.</p>
+
+                      <div class="references">
+                          <h2>References</h2>
+                          <ol class="reference-list">
+                              <li>Russell, Stuart; Norvig, Peter (2009). Artificial Intelligence: A Modern Approach (3rd ed.).</li>
+                              <li>Nilsson, Nils (1998). Artificial Intelligence: A New Synthesis.</li>
+                              <li>Poole, David; Mackworth, Alan (2017). Artificial Intelligence: Foundations of Computational Agents.</li>
+                          </ol>
+                      </div>
+                  </div>
+
+                  <aside class="sidebar">
+                      <h3>Quick Facts</h3>
+                      <div class="sidebar-info">
+                          <strong>Field:</strong> Computer Science
+                      </div>
+                      <div class="sidebar-info">
+                          <strong>Inception:</strong> 1956
+                      </div>
+                      <div class="sidebar-info">
+                          <strong>Key applications:</strong> Machine Learning, Natural Language Processing, Robotics
+                      </div>
+                      <div class="sidebar-info">
+                          <strong>Notable researchers:</strong> Alan Turing, John McCarthy, Marvin Minsky
+                      </div>
+                  </aside>
+              </div>
+          </main>
+      </div>
+  </body>
+  </html>
